@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import tower from "@/assets/prop-tower.jpg";
 import plot from "@/assets/prop-plot.jpg";
 import penthouse from "@/assets/prop-penthouse.jpg";
-
+import skyCrown from "@/assets/skyCrown.jpeg"
 type Card = {
   title: string;
   titleAccent: string;
@@ -21,18 +21,24 @@ type Card = {
 
 const cards: Card[] = [
   {
-    title: "Nagpur",
-    titleAccent: "Marina",
-    sub: "India's first luxury waterfront plotted development — 918 premium plots across 78 acres.",
-    location: "Mondha, Hingna, South Nagpur",
-    tag: "Lodha · HOABL",
+    title: "SkyConnect",
+    titleAccent: "7 Crown",
+
+    sub: "A premium residential address in Jaiprakash Nagar, offering thoughtfully designed spacious homes, modern amenities, rooftop living, and seamless city connectivity.",
+
+    location: "Jaiprakash Nagar, Nagpur",
+
+    tag: "Luxury Residences",
     tagColor: "from-blue-600 to-blue-400",
-    img: plot,
+
+    img: skyCrown,
+
     meta: [
-      { icon: Maximize2, text: "918 Plots · 78 Acres" },
-      { icon: Waves, text: "Waterfront Living" },
+      { icon: Maximize2, text: "Spacious 3 BHK Residences" },
+      { icon: Building2, text: "Premium RCC Construction" },
     ],
-    href: "/projects/nagpur-marina",
+
+    href: "/projects/skyconnect-7-crown",
   },
   {
     title: "Pyramid",
@@ -65,7 +71,11 @@ const cards: Card[] = [
 ];
 
 /* ── Tilt card wrapper ── */
-function TiltCard({ children, className, onClick }: {
+function TiltCard({
+  children,
+  className,
+  onClick,
+}: {
   children: React.ReactNode;
   className?: string;
   onClick: () => void;
@@ -83,7 +93,10 @@ function TiltCard({ children, className, onClick }: {
     x.set((e.clientX - r.left) / r.width - 0.5);
     y.set((e.clientY - r.top) / r.height - 0.5);
   }
-  function onLeave() { x.set(0); y.set(0); }
+  function onLeave() {
+    x.set(0);
+    y.set(0);
+  }
 
   return (
     <motion.div
@@ -110,148 +123,158 @@ function ProjectCard({ c, i }: { c: Card; i: number }) {
       transition={{ duration: 0.9, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link to={c.href} className="block">
-      <TiltCard
-        onClick={() => {}}
-        className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[28px]"
-      >
-        <div
-          className="relative h-full w-full"
-          style={{ minHeight: "480px" }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+        <TiltCard
+          onClick={() => {}}
+          className="group relative h-full w-full cursor-pointer overflow-hidden rounded-[28px]"
         >
-          {/* ── Image with zoom ── */}
-          <motion.img
-            src={c.img}
-            alt={c.title}
-            loading="lazy"
-            animate={{ scale: hovered ? 1.08 : 1 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-
-          {/* ── Gradient overlays ── */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/50 to-transparent" />
-          <motion.div
-            animate={{ opacity: hovered ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 bg-gradient-to-br from-[var(--gold)]/10 via-transparent to-transparent"
-          />
-
-          {/* ── Gold border glow on hover ── */}
-          <motion.div
-            animate={{ opacity: hovered ? 1 : 0 }}
-            transition={{ duration: 0.4 }}
-            className="absolute inset-0 rounded-[28px] shadow-[inset_0_0_0_1.5px_rgba(212,175,55,0.5),0_0_80px_-10px_rgba(212,175,55,0.4)]"
-          />
-          <div className="absolute inset-0 rounded-[28px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.07)]" />
-
-          {/* ── TOP ROW ── */}
-          <div className="absolute left-5 right-5 top-5 flex items-center justify-between">
-            {/* tag pill */}
-            <motion.div
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 + 0.3 }}
-            >
-              <span className={`inline-flex items-center rounded-full bg-gradient-to-r ${c.tagColor} px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white shadow-lg`}>
-                {c.tag}
-              </span>
-            </motion.div>
-
-            {/* arrow button */}
-            <motion.div
-              animate={{
-                rotate: hovered ? 45 : 0,
-                backgroundColor: hovered ? "var(--gold)" : "rgba(255,255,255,0.08)",
-              }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="grid h-10 w-10 place-items-center rounded-full backdrop-blur-md border border-white/15"
-            >
-              <motion.div animate={{ color: hovered ? "#0B0B0B" : "#ffffff" }} transition={{ duration: 0.3 }}>
-                <ArrowUpRight className="h-4 w-4" />
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* ── BOTTOM CONTENT ── */}
-          <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-
-            {/* location */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 + 0.2 }}
-              className="flex items-center gap-1.5 mb-3"
-            >
-              <MapPin className="h-3 w-3 text-[var(--gold)] shrink-0" />
-              <span className="text-[10px] uppercase tracking-[0.28em] text-white/50">{c.location}</span>
-            </motion.div>
-
-            {/* title — split with accent */}
-            <div className="overflow-hidden">
-              <motion.div
-                initial={{ y: "100%" }}
-                whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.12 + 0.25, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <h3
-                  className="font-display text-[clamp(2rem,3.2vw,2.8rem)] leading-[1.0] tracking-tight text-white"
-                >
-                  {c.title}{" "}
-                  <span className="text-gradient-gold italic">{c.titleAccent}</span>
-                </h3>
-              </motion.div>
-            </div>
-
-            {/* subtitle — slides up on hover */}
-            <div className="overflow-hidden mt-2">
-              <motion.p
-                animate={{ y: hovered ? 0 : "110%", opacity: hovered ? 1 : 0 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="text-sm leading-relaxed text-white/55 max-w-sm"
-              >
-                {c.sub}
-              </motion.p>
-            </div>
-
-            {/* divider line — expands on hover */}
-            <motion.div
-              animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
-              initial={{ scaleX: 0, opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-4 h-px origin-left bg-gradient-to-r from-[var(--gold)]/60 to-transparent"
+          <div
+            className="relative h-full w-full"
+            style={{ minHeight: "480px" }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            {/* ── Image with zoom ── */}
+            <motion.img
+              src={c.img}
+              alt={c.title}
+              loading="lazy"
+              animate={{ scale: hovered ? 1.08 : 1 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0 h-full w-full object-cover"
             />
 
-            {/* meta row */}
+            {/* ── Gradient overlays ── */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/50 to-transparent" />
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 + 0.4 }}
-              className="mt-4 flex items-center justify-between gap-4"
-            >
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {c.meta.map(({ icon: Icon, text }) => (
-                  <span key={text} className="inline-flex items-center gap-1.5 text-[11px] text-white/55">
-                    <Icon className="h-3.5 w-3.5 shrink-0 text-[var(--gold)]" />
-                    {text}
-                  </span>
-                ))}
+              animate={{ opacity: hovered ? 1 : 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0 bg-gradient-to-br from-[var(--gold)]/10 via-transparent to-transparent"
+            />
+
+            {/* ── Gold border glow on hover ── */}
+            <motion.div
+              animate={{ opacity: hovered ? 1 : 0 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 rounded-[28px] shadow-[inset_0_0_0_1.5px_rgba(212,175,55,0.5),0_0_80px_-10px_rgba(212,175,55,0.4)]"
+            />
+            <div className="absolute inset-0 rounded-[28px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.07)]" />
+
+            {/* ── TOP ROW ── */}
+            <div className="absolute left-5 right-5 top-5 flex items-center justify-between">
+              {/* tag pill */}
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.12 + 0.3 }}
+              >
+                <span
+                  className={`inline-flex items-center rounded-full bg-gradient-to-r ${c.tagColor} px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white shadow-lg`}
+                >
+                  {c.tag}
+                </span>
+              </motion.div>
+
+              {/* arrow button */}
+              <motion.div
+                animate={{
+                  rotate: hovered ? 45 : 0,
+                  backgroundColor: hovered ? "var(--gold)" : "rgba(255,255,255,0.08)",
+                }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="grid h-10 w-10 place-items-center rounded-full backdrop-blur-md border border-white/15"
+              >
+                <motion.div
+                  animate={{ color: hovered ? "#0B0B0B" : "#ffffff" }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                </motion.div>
+              </motion.div>
+            </div>
+
+            {/* ── BOTTOM CONTENT ── */}
+            <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+              {/* location */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.12 + 0.2 }}
+                className="flex items-center gap-1.5 mb-3"
+              >
+                <MapPin className="h-3 w-3 text-[var(--gold)] shrink-0" />
+                <span className="text-[10px] uppercase font-bold text-white/80">
+                  {c.location}
+                </span>
+              </motion.div>
+
+              {/* title — split with accent */}
+              <div className="overflow-hidden">
+                <motion.div
+                  initial={{ y: "100%" }}
+                  whileInView={{ y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: i * 0.12 + 0.25, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <h5 className="text-gradient-gold font-bold text-3xl"> {c.title}</h5>
+                  <h3 className="font-display  text-[clamp(2rem,3.2vw,2.8rem)] leading-[1.0] tracking-tight text-white">
+                    
+                    {c.titleAccent}
+                  </h3>
+                </motion.div>
               </div>
 
-              {/* RERA badge */}
-              <div className="shrink-0 flex items-center gap-1.5 rounded-full border border-[var(--gold)]/25 bg-[var(--gold)]/8 px-3 py-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--gold)]" />
-                <span className="text-[9px] uppercase tracking-widest text-[var(--gold)]">RERA</span>
+              {/* subtitle — slides up on hover */}
+              <div className="overflow-hidden mt-2">
+                <motion.p
+                  animate={{ y: hovered ? 0 : "110%", opacity: hovered ? 1 : 0 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-sm leading-relaxed text-white/95 max-w-sm"
+                >
+                  {c.sub}
+                </motion.p>
               </div>
-            </motion.div>
+
+              {/* divider line — expands on hover */}
+              <motion.div
+                animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-4 h-px origin-left bg-gradient-to-r from-[var(--gold)]/60 to-transparent"
+              />
+
+              {/* meta row */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.12 + 0.4 }}
+                className="mt-4 flex items-center justify-between gap-4"
+              >
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+                  {c.meta.map(({ icon: Icon, text }) => (
+                    <span
+                      key={text}
+                      className="inline-flex items-center gap-1.5 text-[11px] text-white/55"
+                    >
+                      <Icon className="h-3.5 w-3.5 shrink-0 text-[var(--gold)]" />
+                      {text}
+                    </span>
+                  ))}
+                </div>
+
+                {/* RERA badge */}
+                <div className="shrink-0 flex items-center gap-1.5 rounded-full border border-[var(--gold)]/25 bg-[var(--gold)]/8 px-3 py-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--gold)]" />
+                  <span className="text-[9px] uppercase tracking-widest text-[var(--gold)]">
+                    RERA
+                  </span>
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </TiltCard>
+        </TiltCard>
       </Link>
     </motion.div>
   );
@@ -267,12 +290,10 @@ const statItems = [
 export function FeaturedProjects() {
   return (
     <section id="projects" className="relative py-10 md:py-12 overflow-hidden">
-
       {/* ambient background glow */}
       <div className="pointer-events-none absolute left-1/4 top-1/3 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[var(--gold)]/4 blur-[140px]" />
 
       <div className="relative mx-auto max-w-7xl px-6 md:px-8">
-
         {/* ── HEADER ── */}
         <div className="mb-16 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <motion.div
@@ -283,10 +304,14 @@ export function FeaturedProjects() {
           >
             <div className="flex items-center gap-3 mb-4">
               <span className="h-px w-8 bg-[var(--gold)]" />
-              <span className="text-xs uppercase tracking-[0.35em] text-[var(--gold)]"> Our Projects</span>
+              <span className="text-xs uppercase tracking-[0.35em] text-[var(--gold)]">
+                {" "}
+                Our Projects
+              </span>
             </div>
             <h2 className="font-display text-5xl leading-[1.0] md:text-7xl">
-              Crafted for<br />
+              Crafted for
+              <br />
               <span className="text-gradient-gold italic">Exceptional Living</span>
             </h2>
           </motion.div>
@@ -298,7 +323,8 @@ export function FeaturedProjects() {
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-sm text-sm leading-relaxed text-white/45 md:text-right"
           >
-            Premium plots, 2 & 3 BHK apartments, and waterfront developments in Nagpur's most sought-after corridors.
+            Premium plots, 2 & 3 BHK apartments, and waterfront developments in Nagpur's most
+            sought-after corridors.
           </motion.p>
         </div>
 
@@ -320,8 +346,12 @@ export function FeaturedProjects() {
               className="group relative overflow-hidden rounded-[18px] border border-white/8 bg-white/3 p-5 text-center transition-all hover:border-[var(--gold)]/30 hover:bg-white/6"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative font-display text-2xl text-gradient-gold md:text-3xl">{s.value}</div>
-              <div className="relative mt-1 text-[10px] uppercase tracking-[0.22em] text-white/40">{s.label}</div>
+              <div className="relative font-display text-2xl text-gradient-gold md:text-3xl">
+                {s.value}
+              </div>
+              <div className="relative mt-1 text-[10px] uppercase tracking-[0.22em] text-white/40">
+                {s.label}
+              </div>
             </motion.div>
           ))}
         </motion.div>

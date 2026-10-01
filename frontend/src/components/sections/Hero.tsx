@@ -74,7 +74,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative min-h-screen w-full overflow-hidden">
-      <div ref={containerRef} className="relative h-[460px] overflow-visible md:h-[727px]">
+      <div ref={containerRef} className="relative h-[960px] overflow-visible md:h-[727px]">
         <img
           src={mapBg}
           alt="Nagpur map"
